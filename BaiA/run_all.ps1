@@ -31,6 +31,7 @@ Invoke-Step "4. Conformal bounds and extrapolation"   @("BaiA/week4_conformal_ex
 Invoke-Step "5. Closed form, SHAP, sensitivity, lab-to-field" @("BaiA/week5_formula_sensitivity.py")
 Invoke-Step "S2. Choice of terms in the closed form" @("BaiA/formula_variant_check.py")
 Invoke-Step "S4. CIRIA C742 baseline"                @("BaiA/ciria_check.py")
+Invoke-Step "S7-S8. Refined closed form, timing, k multipliers" @("BaiA/revision_analyses.py")
 Invoke-Step "Figures (English, 300 dpi)"             @("BaiA/make_figures_en.py")
 Invoke-Step "Supplement tables"                      @("BaiA/make_supplement.py")
 Write-Host "All steps finished. Outputs: BaiA/outputs, BaiA/figures_en, BaiA/Supplement_BaiA.md" -ForegroundColor Green

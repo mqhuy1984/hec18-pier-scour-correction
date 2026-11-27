@@ -194,3 +194,143 @@ Khan, A., and D. Ismael. 2026. "Interpretable machine learning for bridge‑pier
 Kim, T., S. Kwon, and T. Kim. 2026. "Probabilistic prediction and reliability analysis of abutment scour depth using natural gradient boosting." *Water* 18 (21): 2688. https://doi.org/10.3390/w18212688.
 
 Sheppard, D. M., H. Demir, and B. W. Melville. 2011. *Scour at wide piers and long skewed piers*. NCHRP Rep. 682. Washington, DC: Transportation Research Board.
+
+## S7. Application to the Ngoi Thia Bridge, Vietnam
+
+The Ngoi Thia Bridge (five spans, 176.5 m, opened in 1989) crosses a gravel‑bed mountain river in northern Vietnam on shallow foundations. During the flood of 5–11 October 2017 (modelled peak discharge 860 m³/s, water level +264.06 m), Pier T4 settled and tilted and two spans collapsed (Fig. S1). The official investigation (MOT 2017) attributed the failure to the extreme flood, to morphological change that shifted the thalweg toward Pier T4, and to a large bamboo cluster trapped against the pier. After the flood, the bed at the pier was 2.63 m below its pre‑flood level and 0.63 m below the base of the 2‑m‑deep footing.
+
+Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four piers, so the bridge‑level multiplier is 2.6 × 4^0.3 ≈ 3.95 (main text, Table 5).
+
+**Table S7.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured: at least 2.63 m; footing depth 2.0 m).
+
+| Estimate | V = 1.3 m/s, θ = 0° | V = 1.3 m/s, θ = 15° | V = 2.6 m/s, θ = 0° | V = 2.6 m/s, θ = 15° |
+|---|---|---|---|---|
+| HEC‑18 | 2.51 | 4.03 | 3.36 | 5.43 |
+| Corrected median, Eq. (2) | 0.77 | 0.93 | 0.92 | 1.12 |
+| 95% bound, single pier (× 2.6) | 2.03 | 2.45 | 2.42 | 2.94 |
+| 95% bound, all four piers (× 3.95) | 3.04 | 3.67 | 3.63 | 4.42 |
+
+The corrected median is smaller than the footing depth in every scenario and would have suggested a safe foundation; the measured scour, a lower bound because the hole refills after a flood, is 2.3–3.4 times the median and exceeds the single‑pier bound in three of four scenarios. The bound for all four piers is not exceeded, and HEC‑18 is exceeded only in the aligned, low‑velocity scenario. The pier was outside the scope of Eq. (2) because of the debris and the migrating thalweg.
+
+![Fig. S1](figures_en/Fig7_ngoithia_case.png)
+
+**Fig. S1.** Ngoi Thia Bridge after the flood of October 2017: (a) Pier T4 and the collapsed spans (photograph by the first author); (b) geometry of Pier T4, with bed levels before and after the flood (data from MOT 2017).
+
+## S8. Development of the refined closed form
+
+Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = ln(a/D50) and θ, cohesionless and unreported beds; E2 = E1 + ln Fr (Eq. 2 of the main text).
+
+**Table S8a.** MAE (m) of the variants under bridge‑ and source‑grouped CV and in the six extrapolation experiments. E1 and E2 exclude the 78 cohesive‑bed records, so their test sets differ slightly from those of E0 (notably gravel → sand).
+
+| E0: 4 terms (current: aD, θ, C, U), all beds | E1: aD, θ; cohesionless + unknown | E2: aD, θ, ln Fr; cohesionless + unknown |
+|---|---|---|
+| 0.354 | 0.368 | 0.305 |
+| 0.643 | 0.604 | 0.591 |
+| 0.969 | 0.911 | 0.921 |
+| 1.268 | 1.281 | 1.248 |
+| 0.472 | 0.495 | 0.494 |
+| 0.585 | 0.633 | 0.682 |
+| 0.569 | 0.541 | 0.499 |
+| 0.505 | 0.510 | 0.511 |
+
+**Table S8b.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
+
+| term          | E0: 4 terms (current: aD, θ, C, U), all beds   | E1: aD, θ; cohesionless + unknown   | E2: aD, θ, ln Fr; cohesionless + unknown   |
+|:--------------|:-----------------------------------------------|:------------------------------------|:-------------------------------------------|
+| const         | -1.927 [-2.097, -1.772]                        | -1.975 [-2.158, -1.803]             | -2.037 [-2.221, -1.854]                    |
+| x_bed_unknown | -0.158 [-0.316, -0.006]                        |                                     |                                            |
+| x_cohesive    | -0.793 [-1.012, -0.586]                        |                                     |                                            |
+| x_log_Fr      |                                                |                                     | -0.170 [-0.286, -0.037]                    |
+| x_log_aD      | 0.157 [0.125, 0.188]                           | 0.152 [0.123, 0.182]                | 0.120 [0.087, 0.152]                       |
+| x_theta       | -1.852 [-2.410, -1.263]                        | -1.802 [-2.354, -1.176]             | -1.714 [-2.280, -1.024]                    |
+
+**Table S8c.** Out‑of‑fold residual (log scale) by Froude‑number class, median with bridge‑bootstrap 90% interval, and Spearman correlation of residual with Fr.
+
+| variant | Fr_class | n | median_resid | lo90 | hi90 | spearman_rho | spearman_p |
+|---|---|---|---|---|---|---|---|
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.0, 0.1] | 178 | 0.223 | 0.063 | 0.346 | -0.124 | 0.000 |
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.1, 0.2] | 371 | 0.065 | -0.108 | 0.244 | -0.124 | 0.000 |
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.2, 0.3] | 274 | 0.034 | -0.034 | 0.137 | -0.124 | 0.000 |
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.3, 0.4] | 198 | 0.059 | -0.030 | 0.164 | -0.124 | 0.000 |
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.4, 0.5] | 121 | 0.006 | -0.085 | 0.101 | -0.124 | 0.000 |
+| E0: 4 terms (current: aD, θ, C, U), all beds | (0.5, 1.0] | 111 | -0.186 | -0.279 | -0.081 | -0.124 | 0.000 |
+| E1: aD, θ; cohesionless + unknown | (0.0, 0.1] | 167 | 0.167 | 0.026 | 0.353 | -0.094 | 0.001 |
+| E1: aD, θ; cohesionless + unknown | (0.1, 0.2] | 348 | 0.041 | -0.109 | 0.220 | -0.094 | 0.001 |
+| E1: aD, θ; cohesionless + unknown | (0.2, 0.3] | 250 | 0.099 | 0.019 | 0.179 | -0.094 | 0.001 |
+| E1: aD, θ; cohesionless + unknown | (0.3, 0.4] | 195 | 0.079 | -0.016 | 0.210 | -0.094 | 0.001 |
+| E1: aD, θ; cohesionless + unknown | (0.4, 0.5] | 111 | 0.074 | -0.062 | 0.147 | -0.094 | 0.001 |
+| E1: aD, θ; cohesionless + unknown | (0.5, 1.0] | 104 | -0.182 | -0.324 | -0.035 | -0.094 | 0.001 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.0, 0.1] | 167 | 0.062 | -0.115 | 0.220 | 0.006 | 0.832 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.1, 0.2] | 348 | 0.010 | -0.140 | 0.179 | 0.006 | 0.832 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.2, 0.3] | 250 | 0.137 | 0.073 | 0.197 | 0.006 | 0.832 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.3, 0.4] | 195 | 0.123 | 0.039 | 0.248 | 0.006 | 0.832 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.4, 0.5] | 111 | 0.132 | 0.033 | 0.244 | 0.006 | 0.832 |
+| E2: aD, θ, ln Fr; cohesionless + unknown | (0.5, 1.0] | 104 | -0.107 | -0.200 | 0.010 | 0.006 | 0.832 |
+
+**Table S8d.** Sensitivity of Eq. (2) to measurement timing: coefficients without and with indicators for historical, post‑flood and unreported timing (reference: during a flow event).
+
+| term | without_timing | with_timing |
+|---|---|---|
+| const | -2.037 | -1.916 |
+| x_log_aD | 0.120 | 0.111 |
+| x_theta | -1.714 | -1.827 |
+| x_log_Fr | -0.170 | -0.147 |
+| Historical | — | 0.099 |
+| Post Flood | — | -0.178 |
+| timing NA | — | -0.335 |
+
+**Table S8e.** Median measured/HEC‑18 ratio by a/D50 tercile within each bed class, with the Spearman correlation of ln(a/D50) and the log ratio within the class.
+
+| D50_class | aD_range | n | ratio_med | spearman_rho | spearman_p |
+|---|---|---|---|---|---|
+| coarse ≥20 mm | 6–22 | 92 | 0.221 | -0.063 | 0.299 |
+| coarse ≥20 mm | 22–42 | 92 | 0.219 | -0.063 | 0.299 |
+| coarse ≥20 mm | 42–215 | 91 | 0.220 | -0.063 | 0.299 |
+| gravel 2–20 mm | 44–100 | 42 | 0.267 | 0.028 | 0.755 |
+| gravel 2–20 mm | 100–239 | 44 | 0.232 | 0.028 | 0.755 |
+| gravel 2–20 mm | 239–610 | 40 | 0.312 | 0.028 | 0.755 |
+| sand <2 mm | 277–1306 | 340 | 0.439 | -0.030 | 0.376 |
+| sand <2 mm | 1306–3663 | 228 | 0.384 | -0.030 | 0.376 |
+| sand <2 mm | 3663–1219559 | 284 | 0.404 | -0.030 | 0.376 |
+
+**Table S8f.** Full stratification by measurement timing, method, recurrence interval and gradation (ratio = measured/HEC‑18; resid factor = measured/corrected by Eq. 2, out of fold).
+
+| factor | class | n | bridges | ratio_med | ratio_lo90 | ratio_hi90 | underpred_% | resid_factor_med | resid_lo90 | resid_hi90 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| timing | During Flow Event | 760 | 191 | 0.329 | 0.298 | 0.362 | 4.868 | 1.071 | 1.010 | 1.142 |
+| timing | Historical | 325 | 105 | 0.387 | 0.358 | 0.431 | 5.231 | 1.204 | 1.074 | 1.479 |
+| timing | Post Flood | 54 | 21 | 0.269 | 0.193 | 0.310 | 0.000 | 0.954 | 0.820 | 1.085 |
+| timing | not reported | 114 | 54 | 0.230 | 0.165 | 0.512 | 2.632 | 0.888 | 0.673 | 1.214 |
+| method | GPR (detects infilled holes) | 146 | 52 | 0.623 | 0.553 | 0.698 | 11.644 | 1.688 | 1.551 | 1.837 |
+| method | Scour Rod | 10 | 6 | 0.178 | 0.118 | 0.243 | 0.000 | 0.880 | 0.715 | 1.163 |
+| method | Soundings/fathometer/ADCP | 742 | 178 | 0.325 | 0.293 | 0.357 | 4.043 | 1.069 | 1.003 | 1.143 |
+| method | Survey | 184 | 76 | 0.277 | 0.232 | 0.295 | 0.000 | 0.670 | 0.602 | 0.718 |
+| method | not reported | 171 | 78 | 0.319 | 0.241 | 0.446 | 5.848 | 0.995 | 0.894 | 1.225 |
+| recurrence interval | 10–50 yr | 170 | 61 | 0.346 | 0.292 | 0.420 | 5.882 | 0.947 | 0.757 | 1.195 |
+| recurrence interval | 2–10 yr | 168 | 59 | 0.306 | 0.254 | 0.346 | 2.381 | 0.949 | 0.860 | 1.078 |
+| recurrence interval | >50 yr | 63 | 23 | 0.359 | 0.325 | 0.610 | 7.937 | 1.223 | 0.875 | 1.464 |
+| recurrence interval | not reported | 607 | 156 | 0.393 | 0.344 | 0.459 | 5.931 | 1.127 | 1.018 | 1.240 |
+| recurrence interval | ≤2 yr | 245 | 109 | 0.265 | 0.242 | 0.289 | 0.816 | 1.075 | 1.008 | 1.180 |
+| gradation | gravel, σg < 3 | 160 | 74 | 0.258 | 0.234 | 0.273 | 0.000 | 1.148 | 1.070 | 1.243 |
+| gradation | gravel, σg not reported | 165 | 73 | 0.184 | 0.154 | 0.221 | 0.606 | 0.796 | 0.598 | 0.928 |
+| gradation | gravel, σg ≥ 3 (armour-prone) | 76 | 28 | 0.271 | 0.228 | 0.310 | 0.000 | 1.083 | 0.948 | 1.261 |
+| gradation | sand | 852 | 209 | 0.420 | 0.377 | 0.459 | 6.573 | 1.111 | 1.023 | 1.208 |
+
+**Table S8g.** Multipliers for k piers: empirical resampling, Gaussian random‑effects model and semi‑parametric resampling of bridge effects and within‑bridge deviations.
+
+| k_piers | bridges_with_≥k_piers | multiplier_empirical | multiplier_random_effects | indep_bridge_exceed_of_single_pier_bound_% | multiplier_semiparametric |
+|---|---|---|---|---|---|
+| 1.000 | 347.000 | 2.594 | 3.210 | 5.000 | 2.871 |
+| 2.000 | 137.000 | 2.859 | 3.854 | 9.750 | 3.553 |
+| 3.000 | 63.000 | 3.744 | 4.256 | 14.263 | 4.005 |
+| 4.000 | 39.000 | 3.840 | 4.538 | 18.549 | 4.360 |
+| 5.000 | 19.000 | 4.242 | 4.784 | 22.622 | 4.776 |
+| 6.000 | 10.000 | — | 4.971 | 26.491 | 5.155 |
+| 8.000 | 3.000 | — | 5.282 | 33.658 | 5.637 |
+| 10.000 | 0.000 | — | 5.500 | 40.126 | 6.196 |
+
+Under the single‑pier bound of Eq. (2), the proportion of records above the bound was 16.4% for ground‑penetrating‑radar records and 3.2% for soundings; the 95th percentile of the residual multiplier was 3.28 for radar records and 2.29 for the others.
+
+### References for S7–S8
+
+MOT (Ministry of Transport of Vietnam). 2017. *Report on the cause of the Ngoi Thia Bridge collapse.* Hanoi, Vietnam: MOT. [In Vietnamese.]

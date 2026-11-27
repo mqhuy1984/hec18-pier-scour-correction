@@ -37,6 +37,7 @@ The steps can also be run one by one (same order):
 | 5 | `week5_formula_sensitivity.py` | `week5_formula_coefficients.csv`, `week5_formula_conformal_factors.csv`, `week5_extrap_bootstrap.csv`, `week5_lab_to_field.csv` | Sections 4.5–4.8, Fig. 6 |
 | S2 | `formula_variant_check.py` | `formula_variant_check.csv` | Supplement S2 |
 | S4 | `ciria_check.py` | `ciria_equations.csv`, `ciria_by_covariate.csv`, `ciria_correction_cv.csv` | Table 2, Supplement S4 |
+| S8 | `revision_analyses.py` | `rev_eq2_variants.csv`, `rev_eq2_coefficients.csv`, `rev_k_multipliers.csv`, `rev_strat_timing.csv`, `rev_*.csv` | Eq. 2, Tables 4–6, Supplement S7–S8 |
 | — | `make_figures_en.py` | `BaiA/figures_en/Fig1–Fig6` | Figures |
 | — | `make_supplement.py` | `BaiA/Supplement_BaiA.md` | Supplement |
 
