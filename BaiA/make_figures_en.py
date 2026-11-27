@@ -45,7 +45,10 @@ plt.rcParams["pdf.fonttype"] = 42          # TrueType fonts embedded in PDF (ASC
 def save(fig, name):
     fig.savefig(FIG / name, dpi=300, bbox_inches="tight")
     # vector PDF for submission: Fig1.pdf ... Fig6.pdf (ASCE accepts TIFF, EPS or PDF with embedded fonts)
-    fig.savefig(SUB / (name.split("_")[0] + ".pdf"), bbox_inches="tight")
+    # manuscript numbering after removing the workflow figure: Fig2..Fig6 (files) -> Fig. 1..5 (paper)
+    num = {"Fig2": "Fig1", "Fig3": "Fig2", "Fig4": "Fig3", "Fig5": "Fig4", "Fig6": "Fig5"}.get(name.split("_")[0])
+    if num:
+        fig.savefig(SUB / (num + ".pdf"), bbox_inches="tight")
     plt.close(fig); print("wrote", FIG / name)
 
 
@@ -181,22 +184,21 @@ fig.tight_layout(); save(fig, "Fig5_extrapolation.png")
 
 # ------------------------------------------------------------------ Fig 6 formula, SHAP, lab vs field
 # Eq. 2 (refined closed form, cohesionless and unreported beds): coefficients from revision_analyses.py
-rc = pd.read_csv(OUT / "rev2_coefficients.csv"); rc = rc[rc["variant"].str.startswith("E3g")].set_index("term")["coef"]
-k1 = 2.6
+rc = pd.read_csv(OUT / "rev2_coefficients.csv"); rc = rc[rc["variant"].str.startswith("E3:")].set_index("term")["coef"]
+k1 = 2.7
 m = (ev["bed"] != "cohesive").to_numpy()
 aD = raw["a/D50"][m]; Fr6 = raw["Fr"][m]; th6 = ev["theta0"][m].fillna(0)
 G6 = (ev["D50_mm"][m] >= 2).astype(float)
-corr0 = np.exp(rc["const"] + rc["b_gravel"] * G6 + rc["x_log_Fr"] * np.log(Fr6) + rc["x_theta"] * th6 / 90)  # as sounded
-corr = corr0 * np.exp(rc["m_gpr"])                                                                              # maximum scour
+corr = np.exp(rc["const"] + rc["b_gravel"] * G6 + rc["x_log_Fr"] * np.log(Fr6) + rc["x_theta"] * th6 / 90)  # Eq. 2, as measured
 sand = (ev["D50_mm"][m] < 2).to_numpy()
 shap = pd.read_csv(OUT / "week5_shap_importance.csv"); gb = pd.read_csv(OUT / "week5_lab_field_by_aD.csv")
-fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.5))
+fig, axes = plt.subplots(1, 2, figsize=(7.2, 2.7))
 ax = axes[0]
 # colours distinct from the model colours used in panel (b) and the lab/field colours in panel (c)
-for sel, lab, col in [(sand, "max. scour median, sand", SLOTS[6]), (~sand, "max. scour median, gravel/cobble", SLOTS[3])]:
+for sel, lab, col in [(sand, "median, sand", SLOTS[6]), (~sand, "median, gravel/cobble", SLOTS[3])]:
     ax.scatter(aD[sel], corr[sel], s=2.5, lw=0, alpha=0.6, color=col, label=lab)
 ax.scatter(aD, corr * k1, s=2.5, lw=0, alpha=0.35, color=SLOTS[7], label=f"95% bound, one pier (×{k1:.1f})")
-ax.scatter(aD, corr * 2.6 * 4 ** 0.3, s=2.5, lw=0, alpha=0.35, color=MUTED, label="95% bound, four piers (×3.9)")
+ax.scatter(aD, corr * 2.7 * 4 ** 0.3, s=2.5, lw=0, alpha=0.35, color=MUTED, label="95% bound, four piers (×4.1)")
 ax.axhline(1, color=INK2, lw=0.7, ls="--"); ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlabel("a/D50"); ax.set_ylabel("ys,corrected / ys,HEC-18")
 ax.legend(fontsize=5.3, loc="lower right", markerscale=3, handletextpad=0.2, borderaxespad=0.2,
@@ -213,13 +215,4 @@ for j, m in enumerate(["M4", "M5"]):
             color=MODEL_COLOR[m], label=MODEL_LABEL[m], error_kw=dict(ecolor=INK2, elinewidth=0.6), zorder=2)
 ax.set_yticks(range(len(order_f))); ax.set_yticklabels([fe.get(f, f) for f in order_f], fontsize=6.5)
 ax.set_xlabel("mean |SHAP| (log units)"); ax.legend(fontsize=6, loc="lower right"); ax.set_title("SHAP, 10 bridge-CV repeats", fontsize=8)
-ax = axes[2]
-labs = ["<50", "50–200", "200–1k", "1k–5k", ">5k"]
-for j, (nm, en) in enumerate([("thí nghiệm", "laboratory"), ("hiện trường", "field")]):
-    s = gb[gb["data"] == nm]
-    ax.plot(range(len(s)), s["median_ratio"], "o-", ms=3.5, lw=1.4, color=SLOTS[j], label=en)
-ax.set_xticks(range(5)); ax.set_xticklabels(labs, fontsize=6.5); ax.set_yscale("log"); ax.minorticks_off()
-ax.set_yticks([0.2, 0.3, 0.5, 1.0]); ax.set_yticklabels(["0.2", "0.3", "0.5", "1"])
-ax.axhline(1, color=INK2, lw=0.7, ls="--"); ax.set_xlabel("a/D50"); ax.set_ylabel("median measured / HEC-18")
-ax.legend(fontsize=6.5); ax.set_title("Laboratory vs field", fontsize=8)
 fig.tight_layout(); save(fig, "Fig6_formula_shap_lab.png")

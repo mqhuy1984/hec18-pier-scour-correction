@@ -33,6 +33,7 @@ Invoke-Step "S2. Choice of terms in the closed form" @("BaiA/formula_variant_che
 Invoke-Step "S4. CIRIA C742 baseline"                @("BaiA/ciria_check.py")
 Invoke-Step "S7-S8. Refined closed form, timing, k multipliers" @("BaiA/revision_analyses.py")
 Invoke-Step "S8. Final Eq. 2: bed class, GPR level, k multipliers" @("BaiA/revision2_analyses.py")
+Invoke-Step "S8. Refill factor and maximum-scour multiplier (Eq. 3)" @("BaiA/revision3_analyses.py")
 Invoke-Step "Figures (English, 300 dpi)"             @("BaiA/make_figures_en.py")
 Invoke-Step "Supplement tables"                      @("BaiA/make_supplement.py")
 Invoke-Step "Supplement as LaTeX (compile to Supplemental_Materials.pdf)" @("BaiA/make_supplement_tex.py")

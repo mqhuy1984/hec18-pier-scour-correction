@@ -201,19 +201,18 @@ Sheppard, D. M., H. Demir, and B. W. Melville. 2011. *Scour at wide piers and lo
 
 The Ngoi Thia Bridge (five spans, 176.5 m, opened in 1989) crosses a gravel‑bed mountain river in northern Vietnam on shallow foundations. During the flood of 5–11 October 2017 (modelled peak discharge 860 m³/s, water level +264.06 m), Pier T4 settled and tilted and two spans collapsed (Fig. S1). The official investigation (MOT 2017) attributed the failure to the extreme flood, to morphological change that shifted the thalweg toward Pier T4, and to a large bamboo cluster trapped against the pier. After the flood, the bed at the pier was 2.63 m below its pre‑flood level and 0.63 m below the base of the 2‑m‑deep footing.
 
-Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four main‑channel piers, so the bridge‑level multiplier is 2.6 × 4^0.3 ≈ 3.95 (main text, Table 3).
+Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four main‑channel piers, so the bridge‑level multiplier is 2.7 × 4^0.3 ≈ 4.1 (main text, Table 3).
 
-**Table S11.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured after the flood: at least 2.63 m; footing depth 2.0 m), using Eq. (2) with G = 1 (gravel). The refill factor 1.61 (M = 1) is identified for sand beds only and is applied here provisionally.
+**Table S11.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured after the flood: at least 2.63 m; footing depth 2.0 m), using Eq. (2) with G = 1 (gravel). The refill factor of Eq. (3) is not determined for gravel beds, so the bounds below are for scour as measured.
 
 | Estimate | V = 1.3 m/s, θ = 0° | V = 1.3 m/s, θ = 15° | V = 2.6 m/s, θ = 0° | V = 2.6 m/s, θ = 15° |
 |---|---|---|---|---|
 | HEC‑18 | 2.51 | 4.03 | 3.36 | 5.43 |
-| Corrected median, scour as sounded (M = 0) | 0.67 | 0.82 | 0.78 | 0.97 |
-| Corrected median, maximum scour (M = 1) | 1.07 | 1.32 | 1.26 | 1.56 |
-| 95% bound, maximum scour, single pier (× 2.6) | 2.78 | 3.42 | 3.28 | 4.05 |
-| 95% bound, maximum scour, four piers (× 3.95) | 4.22 | 5.19 | 4.97 | 6.14 |
+| Corrected median, Eq. (2) | 0.66 | 0.81 | 0.79 | 0.97 |
+| 95% bound, single pier (× 2.7) | 1.77 | 2.17 | 2.13 | 2.62 |
+| 95% bound, four piers (× 2.7 · 4^0.3 = 4.1) | 2.69 | 3.30 | 3.22 | 3.97 |
 
-The corrected median for scour as sounded is well below the footing depth and the measured scour (which is itself a lower bound, because the hole refills after a flood). The single‑pier bound for maximum scour is not exceeded in any scenario, and HEC‑18 is exceeded only in the aligned, low‑velocity scenario. The pier was outside the scope of Eq. (2) because of the debris and the migrating thalweg.
+The corrected median is well below the footing depth and the measured scour (itself a lower bound, because the hole refills after a flood), and the measured scour reaches or exceeds the single‑pier bound for scour as measured in all four scenarios. The four‑pier bound is not exceeded, and HEC‑18 is exceeded only in the aligned, low‑velocity scenario. This is consistent with the main text: in gravel beds, where the refill effect is not determined, HEC‑18 should be retained for maximum scour. The pier was in any case outside the scope of Eq. (2) because of the debris and the migrating thalweg.
 
 ![Fig. S1](figures_en/Fig7_ngoithia_case.png)
 
@@ -434,3 +433,31 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | GPR level (maximum scour, design) | 4 | gravel/cobble | 0.350 | 2.590 | 0.900 | 0.650 | 1.030 | 10.220 |
 
 Direct check on the measurements: the 95th percentile of measured/HEC‑18 is 1.42 for GPR records in sand (12.4% above HEC‑18), 1.03 for soundings in sand (6.2%) and 0.54 for soundings in gravel and cobble (0.4%).
+
+### S8, third revision: refill factor and multiplier for maximum scour
+
+Script: `BaiA/revision3_analyses.py`. Eq. (2) is the bed‑class form without a measurement term (scour as measured). The refill factor of Eq. (3) is the coefficient of a GPR indicator added to Eq. (2): F = 1.61 (bridge‑bootstrap 95% CI 1.39–1.88). Single‑pier multiplier for scour as measured: 2.68. Multiplier for maximum scour, calibrated on GPR records only (Mondrian by measurement method): 2.18; out‑of‑bridge exceedance within the GPR records (50 × 5‑fold, grouped by bridge): 2.0%.
+
+**Table S25.** Maximum‑scour bound relative to HEC‑18 for sand beds, and direct checks on the GPR measurements.
+
+| group | n | median_factor_max | bound1_over_HEC_median | p05 | p95 | share_bound_above_HEC_% |
+|---|---|---|---|---|---|---|
+| sand, all records | 774 | 0.720 | 1.569 | 0.957 | 1.943 | 93.152 |
+| sand, GPR sites | 137 | 0.712 | 1.551 | 0.933 | 1.903 | 89.781 |
+| measured GPR sand: q95 of measured/HEC | 137 | — | 1.423 | — | — | 12.409 |
+| GPR sand records above max-scour single-pier bound (in-sample, %) | 137 | — | — | — | — | 3.650 |
+
+**Table S26.** Multipliers for k piers for Eq. (2) (empirical, semi‑parametric, 2.7·k^0.3 and 2.2·k^0.3 for maximum scour).
+
+| k | bridges | empirical | semiparametric | fit_2.6k^0.3 | max_scour_k1max_k^0.3 |
+|---|---|---|---|---|---|
+| 1.000 | 347.000 | 2.573 | 2.908 | 2.600 | 2.178 |
+| 2.000 | 137.000 | 2.573 | 3.523 | 3.201 | 2.682 |
+| 3.000 | 63.000 | 3.096 | 3.968 | 3.615 | 3.029 |
+| 4.000 | 39.000 | 3.523 | 4.270 | 3.941 | 3.302 |
+| 5.000 | 19.000 | 3.547 | 4.566 | 4.214 | 3.530 |
+| 6.000 | 10.000 | — | 4.882 | 4.451 | 3.729 |
+| 8.000 | 3.000 | — | 5.318 | 4.852 | 4.065 |
+| 10.000 | 0.000 | — | 5.744 | 5.188 | 4.346 |
+
+Bridge‑level factor on HEC‑18 for maximum scour at the GPR‑surveyed sand sites (95th percentile of the maximum measured/HEC‑18 ratio over k piers): 1.34 (k = 1, 46 bridges), 1.60 (k = 2, 36), 1.60 (k = 3, 23) and 1.89 (k = 4, 12).
