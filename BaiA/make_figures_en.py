@@ -45,8 +45,7 @@ plt.rcParams["pdf.fonttype"] = 42          # TrueType fonts embedded in PDF (ASC
 def save(fig, name):
     fig.savefig(FIG / name, dpi=300, bbox_inches="tight")
     # vector PDF for submission: Fig1.pdf ... Fig6.pdf (ASCE accepts TIFF, EPS or PDF with embedded fonts)
-    # manuscript numbering after removing the workflow figure: Fig2..Fig6 (files) -> Fig. 1..5 (paper)
-    num = {"Fig2": "Fig1", "Fig3": "Fig2", "Fig4": "Fig3", "Fig5": "Fig4", "Fig6": "Fig5"}.get(name.split("_")[0])
+    num = name.split("_")[0]   # file numbering = manuscript numbering (Fig. 1 workflow ... Fig. 6)
     if num:
         fig.savefig(SUB / (num + ".pdf"), bbox_inches="tight")
     plt.close(fig); print("wrote", FIG / name)
