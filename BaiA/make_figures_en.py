@@ -38,8 +38,15 @@ plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Segoe UI"
                      "axes.titlesize": 9, "axes.titleweight": "bold", "axes.titlecolor": INK})
 
 
+SUB = HERE / "submission_figures"; SUB.mkdir(exist_ok=True)
+plt.rcParams["pdf.fonttype"] = 42          # TrueType fonts embedded in PDF (ASCE requires embedded fonts)
+
+
 def save(fig, name):
-    fig.savefig(FIG / name, dpi=300, bbox_inches="tight"); plt.close(fig); print("wrote", FIG / name)
+    fig.savefig(FIG / name, dpi=300, bbox_inches="tight")
+    # vector PDF for submission: Fig1.pdf ... Fig6.pdf (ASCE accepts TIFF, EPS or PDF with embedded fonts)
+    fig.savefig(SUB / (name.split("_")[0] + ".pdf"), bbox_inches="tight")
+    plt.close(fig); print("wrote", FIG / name)
 
 
 def bars(ax, groups, series, values, lo=None, hi=None, width=0.8):
