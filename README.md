@@ -1,4 +1,4 @@
-# Code and data for "Correcting HEC‑18 pier‑scour estimates with field data"
+# Code and data for "HEC‑18 Pier Scour against Field Data: Measured versus Maximum Scour and Bridge‑Level Bounds"
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24601656.svg)](https://doi.org/10.5281/zenodo.24601656)
 
