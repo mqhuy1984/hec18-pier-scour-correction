@@ -1,5 +1,9 @@
 # Code and data for "Correcting HEC‑18 pier‑scour estimates with field data"
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24601656.svg)](https://doi.org/10.5281/zenodo.24601656)
+
+Archived on Zenodo: https://doi.org/10.5281/zenodo.24601656 (all versions; v1.0: https://doi.org/10.5281/zenodo.24601657). The Supplemental Materials of the paper are in `Supplemental_Materials.pdf`.
+
 This repository reproduces every number, table and figure of the manuscript (under review) and its supplement (`BaiA/Supplement_BaiA.md`).
 
 ## Data

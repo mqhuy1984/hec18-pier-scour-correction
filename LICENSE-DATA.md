@@ -11,7 +11,7 @@ The derived data are:
 
 You may share and adapt them for any purpose, including commercial use, provided you give appropriate credit. To give credit, cite the article and the repository DOI:
 
-> Mai, Q.H. (2026). [ARTICLE TITLE]. [JOURNAL]. [ARTICLE DOI]. Data and code: [REPOSITORY DOI].
+> Mai, Q. H., Nguyen, D. P., Pham, T. T., and Ho, L. H. (2026). Correcting HEC-18 pier scour with field data: Bridge-level validation and conformal bounds. Journal of Hydraulic Engineering (submitted). Data and code: https://doi.org/10.5281/zenodo.24601656.
 
 ## Source data: public domain
 
