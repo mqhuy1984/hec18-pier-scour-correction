@@ -23,6 +23,9 @@
 !/BaiA/outputs/
 /BaiA/outputs/*
 !/BaiA/outputs/*.csv
+# Study-bridge application (P1-P7) stays private
+/BaiA/outputs/apply_P1_P7*
+/BaiA/P1_P7_input.csv
 !/BaiA/figures_en/
 /BaiA/figures_en/*
 !/BaiA/figures_en/*.png
