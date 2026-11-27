@@ -1,0 +1,10 @@
+# Python 3.13.7 was used for all results in the manuscript.
+numpy==2.3.3
+pandas==2.3.3
+scipy==1.18.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+optuna==5.1.0
+joblib==1.6.0
+matplotlib==3.10.7
+openpyxl==3.1.5
