@@ -173,21 +173,26 @@ axes[1].set_ylabel("% rows above 95% bound"); axes[1].set_title("Exceedance unde
 fig.tight_layout(); save(fig, "Fig5_extrapolation.png")
 
 # ------------------------------------------------------------------ Fig 6 formula, SHAP, lab vs field
-coef = pd.read_csv(OUT / "week5_formula_coefficients.csv").set_index("var")["coef"]
-conf = pd.read_csv(OUT / "week5_formula_conformal_factors.csv", index_col=0)["mean"]
-aD = raw["a/D50"]; ya = raw["y/a"]
-feat = {"const": 1.0, "x_log_ya": np.log(ya), "x_log_aD": np.log(aD), "x_theta": ev["theta0"] / 90,
-        "x_cohesive": (ev["bed"] == "cohesive").astype(float), "x_bed_unknown": ev["bed"].isna().astype(float)}
-lc = sum(coef[k] * feat[k] for k in coef.index)
-corr = np.exp(lc)
+# Eq. 2 (refined closed form, cohesionless and unreported beds): coefficients from revision_analyses.py
+rc = pd.read_csv(OUT / "rev_eq2_coefficients.csv"); rc = rc[rc["variant"].str.startswith("E2")].set_index("term")["coef"]
+k1 = pd.read_csv(OUT / "rev_k_multipliers.csv").set_index("k_piers")["multiplier_empirical"].loc[1]
+m = (ev["bed"] != "cohesive").to_numpy()
+aD = raw["a/D50"][m]; Fr6 = raw["Fr"][m]; th6 = ev["theta0"][m].fillna(0)
+corr = np.exp(rc["const"] + rc["x_log_aD"] * np.log(aD) + rc["x_log_Fr"] * np.log(Fr6) + rc["x_theta"] * th6 / 90)
+sand = (ev["D50_mm"][m] < 2).to_numpy()
 shap = pd.read_csv(OUT / "week5_shap_importance.csv"); gb = pd.read_csv(OUT / "week5_lab_field_by_aD.csv")
 fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.5))
 ax = axes[0]
-ax.scatter(aD, corr, s=2.5, lw=0, alpha=0.5, color=SLOTS[0], label="median correction")
-ax.scatter(aD, corr * np.exp(conf["q95_bridgemax_up"]), s=2.5, lw=0, alpha=0.5, color=SLOTS[1], label="95% bridge-level bound")
+# colours distinct from the model colours used in panel (b) and the lab/field colours in panel (c)
+for sel, lab, col in [(sand, "median, sand", SLOTS[6]), (~sand, "median, gravel/cobble", SLOTS[3])]:
+    ax.scatter(aD[sel], corr[sel], s=2.5, lw=0, alpha=0.6, color=col, label=lab)
+ax.scatter(aD, corr * k1, s=2.5, lw=0, alpha=0.35, color=SLOTS[7], label=f"95% bound, one pier (×{k1:.1f})")
+ax.scatter(aD, corr * 2.6 * 4 ** 0.3, s=2.5, lw=0, alpha=0.35, color=MUTED, label="95% bound, four piers (×3.9)")
 ax.axhline(1, color=INK2, lw=0.7, ls="--"); ax.set_xscale("log"); ax.set_yscale("log")
-ax.set_xlabel("a/D50"); ax.set_ylabel("ys,corrected / ys,HEC-18"); ax.legend(fontsize=6, loc="lower right", markerscale=3)
-ax.set_title("Closed-form correction", fontsize=8)
+ax.set_xlabel("a/D50"); ax.set_ylabel("ys,corrected / ys,HEC-18")
+ax.legend(fontsize=5.3, loc="lower right", markerscale=3, handletextpad=0.2, borderaxespad=0.2,
+          frameon=True, facecolor="white", edgecolor="none", framealpha=0.9)
+ax.set_title("Closed-form correction, Eq. (2)", fontsize=8)
 ax = axes[1]
 order_f = shap.groupby("feature")["mean_abs_shap"].max().sort_values().tail(7).index
 fe = {"x_log_aD": "ln a/D50", "x_log_ya": "ln y/a", "x_log_VVc": "ln V/Vc", "x_theta": "θ/90", "x_log_Fr": "ln Fr",
