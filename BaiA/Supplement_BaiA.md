@@ -27,7 +27,7 @@ CIRIA C742 (Kirby et al., 2015) is implemented as ys = a K_shape K_depth K_veloc
 
 The five‑term candidate contained ln(y/a), ln(a/D50), θ/90, a cohesive‑bed indicator and a bed‑type‑unknown indicator. The coefficient of ln(y/a) was 0.052 (95% bridge‑bootstrap CI −0.026 to 0.135). Three variants were compared by OLS on ln(ys/ys,HEC‑18) (`BaiA/formula_variant_check.py`).
 
-**Table S2a.** Bridge‑grouped CV, 5 folds × 10 repetitions. The bridge‑level multiplier is exp(q95) of the bridge‑maximum out‑of‑fold residual.
+**Table S1.** Bridge‑grouped CV, 5 folds × 10 repetitions. The bridge‑level multiplier is exp(q95) of the bridge‑maximum out‑of‑fold residual.
 
 | Variant | MAE (m) | s.d. | R² log | Bridge‑level 95% multiplier |
 |---|---|---|---|---|
@@ -35,7 +35,7 @@ The five‑term candidate contained ln(y/a), ln(a/D50), θ/90, a cohesive‑bed 
 | 4 terms (adopted) | 0.472 | 0.004 | 0.513 | 3.323 |
 | 2 terms (ln a/D50, θ only) | 0.483 | 0.002 | 0.482 | 3.383 |
 
-**Table S2b.** MAE (m) in the six extrapolation experiments (bridges in the test set removed from training).
+**Table S2.** MAE (m) in the six extrapolation experiments (bridges in the test set removed from training).
 
 | Experiment | 5 terms (with ln y/a) | 4 terms (adopted) | 2 terms (ln a/D50, θ only) |
 |---|---|---|---|
@@ -52,7 +52,7 @@ The four‑term variant has the same in‑distribution accuracy as the five‑te
 
 Each experiment is one train/test split; uncertainty is from 2,000 bootstrap resamples of test bridges (90% intervals). M3‑S6: four‑term log‑linear correction; M4/RF4: direct XGBoost / random forest; M5/RF5/GPR5: residual XGBoost / random forest / Gaussian process.
 
-**Table S3a.** Ratio of extrapolated MAE to the MAE of the same rows under bridge‑grouped CV.
+**Table S3.** Ratio of extrapolated MAE to the MAE of the same rows under bridge‑grouped CV.
 
 | Experiment | Rows / bridges | M3‑S6 | M4 | M5 | RF4 | RF5 | GPR5 |
 |---|---|---|---|---|---|---|---|
@@ -63,7 +63,7 @@ Each experiment is one train/test split; uncertainty is from 2,000 bootstrap res
 | gravel → sand | 852 / 209 | 1.10 [1.03, 1.15] | 1.16 [1.07, 1.24] | 1.31 [1.21, 1.41] | 1.16 [1.09, 1.23] | 1.28 [1.20, 1.35] | 1.35 [1.22, 1.48] |
 | Fr ≤ 0.3 → > 0.5 | 111 / 66 | 1.39 [1.21, 1.58] | 1.39 [1.15, 1.69] | 1.68 [1.32, 2.14] | 1.28 [1.12, 1.45] | 1.60 [1.27, 1.99] | 2.12 [1.65, 2.67] |
 
-**Table S3b.** Difference in MAE (m) relative to M3‑S6 on the same test rows. Bold: the 90% interval excludes zero.
+**Table S4.** Difference in MAE (m) relative to M3‑S6 on the same test rows. Bold: the 90% interval excludes zero.
 
 | Experiment | M4 | M5 | RF4 | RF5 | GPR5 |
 |---|---|---|---|---|---|
@@ -74,7 +74,7 @@ Each experiment is one train/test split; uncertainty is from 2,000 bootstrap res
 | gravel → sand | +0.02 [-0.03, +0.07] | **+0.10 [+0.05, +0.16]** | +0.02 [-0.03, +0.07] | **+0.11 [+0.06, +0.17]** | **+0.17 [+0.10, +0.24]** |
 | Fr ≤ 0.3 → > 0.5 | +0.02 [-0.05, +0.10] | +0.02 [-0.00, +0.05] | -0.03 [-0.09, +0.05] | -0.00 [-0.03, +0.03] | **+0.14 [+0.07, +0.21]** |
 
-**Table S3c.** Percentage of test rows above the 95% conformal upper bound, bridge‑weighted and bridge‑max calibration.
+**Table S5.** Percentage of test rows above the 95% conformal upper bound, bridge‑weighted and bridge‑max calibration.
 
 | Experiment | M3‑S6, bridge‑weighted | M5, bridge‑weighted | M3‑S6, bridge‑max | M5, bridge‑max |
 |---|---|---|---|---|
@@ -89,7 +89,7 @@ Each experiment is one train/test split; uncertainty is from 2,000 bootstrap res
 
 Factors: K_shape = 1.5 (round/circular), 2.0 (square), 1.075 (sharp); K_depth = 0.55 (y/a)^0.6 for y/a ≤ 2.7, otherwise 1; K_velocity = 0 for V/Vc ≤ 0.375, 1.6 V/Vc − 0.6 for 0.375 < V/Vc ≤ 1, and 1 for V/Vc > 1; K_angle = (cos θ + (L/a) sin θ)^0.62. Vc from HEC‑18 Eq. 6.1, or from Gavriel (2025): 0.1 D50^−0.2 for D50 < 1 mm and 0.35 D50^0.45 otherwise (D50 in mm, Vc in m/s). No factor of safety is applied (SF = 1). Records with a zero prediction count as underpredictions and are excluded from log‑scale metrics.
 
-**Table S4a.** All baseline equations on the 1,253 evaluation records.
+**Table S6.** All baseline equations on the 1,253 evaluation records.
 
 | Equation | Zero predictions | MAE (m) | RMSE (m) | R² log | Median ratio | Underpredicted | Within ±50% | c95 |
 |---|---|---|---|---|---|---|---|---|
@@ -102,7 +102,7 @@ Factors: K_shape = 1.5 (round/circular), 2.0 (square), 1.075 (sharp); K_depth = 
 | CIRIA C742 (Vc HEC-18) | 9 | 1.072 | 1.557 | -0.37 | 0.51 | 19.5% | 33.6% | 1.82 |
 | CIRIA C742 (Vc Gavriel 2025) | 0 | 1.205 | 1.698 | -0.48 | 0.44 | 10.2% | 28.7% | 1.23 |
 
-**Table S4b.** Median measured/predicted ratio by covariate class.
+**Table S7.** Median measured/predicted ratio by covariate class.
 
 | Variable | Class | n | CIRIA C742 (Vc HEC-18) | Froehlich best-fit | HEC-18 (5th ed.) |
 |---|---|---|---|---|---|
@@ -122,7 +122,7 @@ Factors: K_shape = 1.5 (round/circular), 2.0 (square), 1.075 (sharp); K_depth = 
 | bn (m) | (3, 5] | 176 | 0.48 | 0.74 | 0.33 |
 | bn (m) | (5, 50] | 80 | 0.39 | 0.61 | 0.27 |
 
-**Table S4c.** Log‑linear corrections on the HEC‑18 and CIRIA baselines, on the records with a non‑zero CIRIA prediction (bridge‑grouped CV, 5 × 10).
+**Table S8.** Log‑linear corrections on the HEC‑18 and CIRIA baselines, on the records with a non‑zero CIRIA prediction (bridge‑grouped CV, 5 × 10).
 
 | Baseline | Correction | Rows | MAE (m) | s.d. | R² log |
 |---|---|---|---|---|---|
@@ -133,11 +133,11 @@ Factors: K_shape = 1.5 (round/circular), 2.0 (square), 1.075 (sharp); K_depth = 
 | CIRIA C742 | 4 terms (S6) | 1244 | 0.541 | 0.005 | 0.191 |
 | CIRIA C742 | 11 terms (S2) | 1244 | 0.559 | 0.006 | 0.233 |
 
-The CIRIA underprediction rate (19.5%) agrees with the 19.0% reported by Gavriel et al. (2026) for 936 PSDb field records. Corrections built on CIRIA explain far less of the variance than corrections built on HEC‑18, because CIRIA's depth and velocity factors saturate (y/a > 2.7, V/Vc > 1) and it contains no Froude‑number term.
+The CIRIA underprediction rate (19.5%) agrees with the 19.0% reported by Gavriel (2025) for 936 PSDb field records. Corrections built on CIRIA explain far less of the variance than corrections built on HEC‑18, because CIRIA's depth and velocity factors saturate (y/a > 2.7, V/Vc > 1) and it contains no Froude‑number term.
 
 ## S5. Data quality, the Russian subset, uncleaned data and the laboratory‑to‑field experiment
 
-**Table S5a.** Quality flags in the PSDb‑2014 field table (1,858 records). Flags are added, never used to delete records; severe flags define the core set (1,586 records).
+**Table S9.** Quality flags in the PSDb‑2014 field table (1,858 records). Flags are added, never used to delete records; severe flags define the core set (1,586 records).
 
 | Flag | Records | Level | Meaning |
 |---|---|---|---|
@@ -167,6 +167,8 @@ The CIRIA underprediction rate (19.5%) agrees with the 19.0% reported by Gavriel
 **Laboratory to field.** The median measured/HEC‑18 ratio is 0.80 for the 525 core laboratory records against 0.34 for the field records; at equal a/D50 the field ratio is 2.1–3.3 times lower (for a/D50 < 50: 0.23 in the field against 0.73 in the laboratory). Trained on laboratory data and applied to the field, a constant factor gave MAE 1.14 m, a linear correction in y/a and a/D50 1.40 m, and XGBoost 1.27 m, against 0.47 m for the field‑trained M3‑S6. Restricting the field data to round, aligned piers does not change this; the offset is not explained by a/D50 within the flume range (15–635).
 
 ## S6. Comparison with previous machine‑learning studies
+
+**Table S10.** Design of this study compared with typical recent ML studies and three recent field‑oriented studies.
 
 | Aspect | Typical recent study | Kim et al. (2025) | Zhou et al. (2026) | Guo et al. (2027) | This study |
 |---|---|---|---|---|---|
@@ -201,7 +203,7 @@ The Ngoi Thia Bridge (five spans, 176.5 m, opened in 1989) crosses a gravel‑be
 
 Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four main‑channel piers, so the bridge‑level multiplier is 2.6 × 4^0.3 ≈ 3.95 (main text, Table 3).
 
-**Table S7.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured after the flood: at least 2.63 m; footing depth 2.0 m), using Eq. (2) with G = 1 (gravel). The refill factor 1.61 (M = 1) is identified for sand beds only and is applied here provisionally.
+**Table S11.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured after the flood: at least 2.63 m; footing depth 2.0 m), using Eq. (2) with G = 1 (gravel). The refill factor 1.61 (M = 1) is identified for sand beds only and is applied here provisionally.
 
 | Estimate | V = 1.3 m/s, θ = 0° | V = 1.3 m/s, θ = 15° | V = 2.6 m/s, θ = 0° | V = 2.6 m/s, θ = 15° |
 |---|---|---|---|---|
@@ -221,7 +223,7 @@ The corrected median for scour as sounded is well below the footing depth and th
 
 Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = ln(a/D50) and θ, cohesionless and unreported beds; E2 = E1 + ln Fr (Eq. 2 of the main text).
 
-**Table S8a.** MAE (m) of the variants under bridge‑ and source‑grouped CV and in the six extrapolation experiments. E1 and E2 exclude the 78 cohesive‑bed records, so their test sets differ slightly from those of E0 (notably gravel → sand).
+**Table S12.** MAE (m) of the variants under bridge‑ and source‑grouped CV and in the six extrapolation experiments. E1 and E2 exclude the 78 cohesive‑bed records, so their test sets differ slightly from those of E0 (notably gravel → sand).
 
 | E0: 4 terms (current: aD, θ, C, U), all beds | E1: aD, θ; cohesionless + unknown | E2: aD, θ, ln Fr; cohesionless + unknown |
 |---|---|---|
@@ -234,7 +236,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | 0.569 | 0.541 | 0.499 |
 | 0.505 | 0.510 | 0.511 |
 
-**Table S8b.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
+**Table S13.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 
 | term          | E0: 4 terms (current: aD, θ, C, U), all beds   | E1: aD, θ; cohesionless + unknown   | E2: aD, θ, ln Fr; cohesionless + unknown   |
 |:--------------|:-----------------------------------------------|:------------------------------------|:-------------------------------------------|
@@ -245,7 +247,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | x_log_aD      | 0.157 [0.125, 0.188]                           | 0.152 [0.123, 0.182]                | 0.120 [0.087, 0.152]                       |
 | x_theta       | -1.852 [-2.410, -1.263]                        | -1.802 [-2.354, -1.176]             | -1.714 [-2.280, -1.024]                    |
 
-**Table S8c.** Out‑of‑fold residual (log scale) by Froude‑number class, median with bridge‑bootstrap 90% interval, and Spearman correlation of residual with Fr.
+**Table S14.** Out‑of‑fold residual (log scale) by Froude‑number class, median with bridge‑bootstrap 90% interval, and Spearman correlation of residual with Fr.
 
 | variant | Fr_class | n | median_resid | lo90 | hi90 | spearman_rho | spearman_p |
 |---|---|---|---|---|---|---|---|
@@ -268,7 +270,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | E2: aD, θ, ln Fr; cohesionless + unknown | (0.4, 0.5] | 111 | 0.132 | 0.033 | 0.244 | 0.006 | 0.832 |
 | E2: aD, θ, ln Fr; cohesionless + unknown | (0.5, 1.0] | 104 | -0.107 | -0.200 | 0.010 | 0.006 | 0.832 |
 
-**Table S8d.** Sensitivity of Eq. (2) to measurement timing: coefficients without and with indicators for historical, post‑flood and unreported timing (reference: during a flow event).
+**Table S15.** Sensitivity of Eq. (2) to measurement timing: coefficients without and with indicators for historical, post‑flood and unreported timing (reference: during a flow event).
 
 | term | without_timing | with_timing |
 |---|---|---|
@@ -280,7 +282,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | Post Flood | — | -0.178 |
 | timing NA | — | -0.335 |
 
-**Table S8e.** Median measured/HEC‑18 ratio by a/D50 tercile within each bed class, with the Spearman correlation of ln(a/D50) and the log ratio within the class.
+**Table S16.** Median measured/HEC‑18 ratio by a/D50 tercile within each bed class, with the Spearman correlation of ln(a/D50) and the log ratio within the class.
 
 | D50_class | aD_range | n | ratio_med | spearman_rho | spearman_p |
 |---|---|---|---|---|---|
@@ -294,7 +296,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | sand <2 mm | 1306–3663 | 228 | 0.384 | -0.030 | 0.376 |
 | sand <2 mm | 3663–1219559 | 284 | 0.404 | -0.030 | 0.376 |
 
-**Table S8f.** Full stratification by measurement timing, method, recurrence interval and gradation (ratio = measured/HEC‑18; resid factor = measured/corrected by Eq. 2, out of fold).
+**Table S17.** Full stratification by measurement timing, method, recurrence interval and gradation (ratio = measured/HEC‑18; resid factor = measured/corrected by Eq. 2, out of fold).
 
 | factor | class | n | bridges | ratio_med | ratio_lo90 | ratio_hi90 | underpred_% | resid_factor_med | resid_lo90 | resid_hi90 |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -317,7 +319,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 | gradation | gravel, σg ≥ 3 (armour-prone) | 76 | 28 | 0.271 | 0.228 | 0.310 | 0.000 | 1.083 | 0.948 | 1.261 |
 | gradation | sand | 852 | 209 | 0.420 | 0.377 | 0.459 | 6.573 | 1.111 | 1.023 | 1.208 |
 
-**Table S8g.** Multipliers for k piers: empirical resampling, Gaussian random‑effects model and semi‑parametric resampling of bridge effects and within‑bridge deviations.
+**Table S18.** Multipliers for k piers: empirical resampling, Gaussian random‑effects model and semi‑parametric resampling of bridge effects and within‑bridge deviations.
 
 | k_piers | bridges_with_≥k_piers | multiplier_empirical | multiplier_random_effects | indep_bridge_exceed_of_single_pier_bound_% | multiplier_semiparametric |
 |---|---|---|---|---|---|
@@ -340,7 +342,7 @@ MOT (Ministry of Transport of Vietnam). 2017. *Report on the cause of the Ngoi T
 
 Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr); E2m = E2 + indicators for GPR, survey, scour rod and unreported method (reference: soundings, fathometer, ADCP); E3 = bed‑class form (G, θ, ln Fr); E3m = E3 + all method indicators; E3c = three bed classes + method indicators; E3g = E3 + GPR indicator only (Eq. 2 of the main text).
 
-**Table S8h.** Variants on the 1,175 cohesionless and unreported‑bed records: bridge‑ and source‑grouped CV, correlation of residual with Fr, and extrapolation (ext = MAE ratio to the same rows under bridge CV; extMAE in m; NaN where a bed‑class factor cannot be estimated).
+**Table S19.** Variants on the 1,175 cohesionless and unreported‑bed records: bridge‑ and source‑grouped CV, correlation of residual with Fr, and extrapolation (ext = MAE ratio to the same rows under bridge CV; extMAE in m; NaN where a bed‑class factor cannot be estimated).
 
 | E2: ln(a/D50), θ, ln Fr | E2m: E2 + method | E3: bed class (sand/gravel), θ, ln Fr | E3m: E3 + method | E3c: 3 bed classes, θ, ln Fr, method | E3g: E3 + GPR indicator only |
 |---|---|---|---|---|---|
@@ -368,7 +370,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | 1.220 | 1.462 | 1.165 | 1.492 | 1.471 | 1.090 |
 | 0.305 | 0.346 | 0.274 | 0.342 | 0.338 | 0.251 |
 
-**Table S8i.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
+**Table S20.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 
 | term       | E2: ln(a/D50), θ, ln Fr   | E2m: E2 + method        | E3: bed class (sand/gravel), θ, ln Fr   | E3c: 3 bed classes, θ, ln Fr, method   | E3g: E3 + GPR indicator only   | E3m: E3 + method        |
 |:-----------|:--------------------------|:------------------------|:----------------------------------------|:---------------------------------------|:-------------------------------|:------------------------|
@@ -384,7 +386,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | x_log_aD   | 0.120 [0.087, 0.152]      | 0.127 [0.091, 0.161]    |                                         |                                        |                                |                         |
 | x_theta    | -1.714 [-2.280, -1.024]   | -1.975 [-2.534, -1.352] | -1.620 [-2.159, -0.962]                 | -1.931 [-2.486, -1.329]                | -1.610 [-2.165, -0.968]        | -1.807 [-2.375, -1.185] |
 
-**Table S8j.** GPR against soundings within the same bed class (ratio = measured/HEC‑18; meas/E2 = measured/out‑of‑fold continuous form). A fit to sand records only gives a GPR coefficient of 0.493 (factor 1.64).
+**Table S21.** GPR against soundings within the same bed class (ratio = measured/HEC‑18; meas/E2 = measured/out‑of‑fold continuous form). A fit to sand records only gives a GPR coefficient of 0.493 (factor 1.64).
 
 | group | n | bridges | ratio_median | meas_over_E2_median |
 |---|---|---|---|---|
@@ -393,7 +395,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | gravel/cobble, GPR | 9 | 6 | 0.179 | 0.574 |
 | gravel/cobble, soundings | 278 | 113 | 0.263 | 1.127 |
 
-**Table S8k.** Multipliers for k piers from out‑of‑fold residuals of Eq. 2 (empirical, Gaussian random‑effects, semi‑parametric, and 2.6·k^0.3 fit at the single‑pier value).
+**Table S22.** Multipliers for k piers from out‑of‑fold residuals of Eq. 2 (empirical, Gaussian random‑effects, semi‑parametric, and 2.6·k^0.3 fit at the single‑pier value).
 
 | k | bridges | empirical | random_effects | fit_k03 | semiparametric |
 |---|---|---|---|---|---|
@@ -406,7 +408,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | 8.000 | 3.000 | — | 4.570 | 4.888 | 4.823 |
 | 10.000 | 0.000 | — | 4.775 | 5.227 | 5.132 |
 
-**Table S8l.** Bridges by number of measured piers (medians): bridges with several measured piers have finer beds and deeper flows.
+**Table S23.** Bridges by number of measured piers (medians): bridges with several measured piers have finer beds and deeper flows.
 
 | cls      |   bn |    y |   D50 |    V |   ratio |   bridges |
 |:---------|-----:|-----:|------:|-----:|--------:|----------:|
@@ -414,7 +416,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 | 2 piers  | 1.23 | 3.47 |  1.14 | 1.66 |    0.29 |        74 |
 | ≥3 piers | 1.31 | 4.33 |  0.69 | 1.22 |    0.37 |        63 |
 
-**Table S8m.** 95% bound of Eq. 2 relative to HEC‑18, for scour as sounded (M = 0) and maximum scour (M = 1), by bed class and number of piers (empirical multipliers).
+**Table S24.** 95% bound of Eq. 2 relative to HEC‑18, for scour as sounded (M = 0) and maximum scour (M = 1), by bed class and number of piers (empirical multipliers).
 
 | level | k | bed | median_factor | multiplier | bound_over_HEC_median | p05 | p95 | share_above_HEC_% |
 |---|---|---|---|---|---|---|---|---|

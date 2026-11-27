@@ -161,7 +161,7 @@ Factors: K_shape = 1.5 (round/circular), 2.0 (square), 1.075 (sharp); K_depth = 
 
 {md(s4c)}
 
-The CIRIA underprediction rate (19.5%) agrees with the 19.0% reported by Gavriel et al. (2026) for 936 PSDb field records. Corrections built on CIRIA explain far less of the variance than corrections built on HEC‑18, because CIRIA's depth and velocity factors saturate (y/a > 2.7, V/Vc > 1) and it contains no Froude‑number term.
+The CIRIA underprediction rate (19.5%) agrees with the 19.0% reported by Gavriel (2025) for 936 PSDb field records. Corrections built on CIRIA explain far less of the variance than corrections built on HEC‑18, because CIRIA's depth and velocity factors saturate (y/a > 2.7, V/Vc > 1) and it contains no Froude‑number term.
 """
 
 # ---------------------------------------------------------------- S5–S6 (text moved from the main paper for length)
@@ -198,6 +198,8 @@ S5_S6 = """
 **Laboratory to field.** The median measured/HEC‑18 ratio is 0.80 for the 525 core laboratory records against 0.34 for the field records; at equal a/D50 the field ratio is 2.1–3.3 times lower (for a/D50 < 50: 0.23 in the field against 0.73 in the laboratory). Trained on laboratory data and applied to the field, a constant factor gave MAE 1.14 m, a linear correction in y/a and a/D50 1.40 m, and XGBoost 1.27 m, against 0.47 m for the field‑trained M3‑S6. Restricting the field data to round, aligned piers does not change this; the offset is not explained by a/D50 within the flume range (15–635).
 
 ## S6. Comparison with previous machine‑learning studies
+
+**Table S6x.** Design of this study compared with typical recent ML studies and three recent field‑oriented studies.
 
 | Aspect | Typical recent study | Kim et al. (2025) | Zhou et al. (2026) | Guo et al. (2027) | This study |
 |---|---|---|---|---|---|
@@ -335,6 +337,15 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 Direct check on the measurements: the 95th percentile of measured/HEC‑18 is 1.42 for GPR records in sand (12.4% above HEC‑18), 1.03 for soundings in sand (6.2%) and 0.54 for soundings in gravel and cobble (0.4%).
 """
 text += S8B
+
+
+# ---------------------------------------------------------------- ASCE: supplemental tables numbered S1, S2, ... (no 1a/1b parts)
+import re as _re
+_labels = _re.findall(r"\*\*Table S([0-9]+[a-z]?)\.\*\*", text)
+_map = {old: str(i + 1) for i, old in enumerate(dict.fromkeys(_labels))}
+text = _re.sub(r"Table S([0-9]+[a-z]?)\b", lambda m: "Table S" + _map.get(m.group(1), m.group(1)) if m.group(1) in _map else m.group(0), text)
+print("supplemental tables:", len(_map))
+(HERE / "outputs" / "supplement_table_count.txt").write_text(str(len(_map)))
 
 (HERE / "Supplement_BaiA.md").write_text(text, encoding="utf-8")
 print("Đã ghi", HERE / "Supplement_BaiA.md")
