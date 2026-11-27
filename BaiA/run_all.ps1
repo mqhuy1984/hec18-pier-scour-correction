@@ -35,4 +35,5 @@ Invoke-Step "S7-S8. Refined closed form, timing, k multipliers" @("BaiA/revision
 Invoke-Step "S8. Final Eq. 2: bed class, GPR level, k multipliers" @("BaiA/revision2_analyses.py")
 Invoke-Step "Figures (English, 300 dpi)"             @("BaiA/make_figures_en.py")
 Invoke-Step "Supplement tables"                      @("BaiA/make_supplement.py")
+Invoke-Step "Supplement as LaTeX (compile to Supplemental_Materials.pdf)" @("BaiA/make_supplement_tex.py")
 Write-Host "All steps finished. Outputs: BaiA/outputs, BaiA/figures_en, BaiA/Supplement_BaiA.md" -ForegroundColor Green
