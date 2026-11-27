@@ -174,17 +174,19 @@ fig.tight_layout(); save(fig, "Fig5_extrapolation.png")
 
 # ------------------------------------------------------------------ Fig 6 formula, SHAP, lab vs field
 # Eq. 2 (refined closed form, cohesionless and unreported beds): coefficients from revision_analyses.py
-rc = pd.read_csv(OUT / "rev_eq2_coefficients.csv"); rc = rc[rc["variant"].str.startswith("E2")].set_index("term")["coef"]
-k1 = pd.read_csv(OUT / "rev_k_multipliers.csv").set_index("k_piers")["multiplier_empirical"].loc[1]
+rc = pd.read_csv(OUT / "rev2_coefficients.csv"); rc = rc[rc["variant"].str.startswith("E3g")].set_index("term")["coef"]
+k1 = 2.6
 m = (ev["bed"] != "cohesive").to_numpy()
 aD = raw["a/D50"][m]; Fr6 = raw["Fr"][m]; th6 = ev["theta0"][m].fillna(0)
-corr = np.exp(rc["const"] + rc["x_log_aD"] * np.log(aD) + rc["x_log_Fr"] * np.log(Fr6) + rc["x_theta"] * th6 / 90)
+G6 = (ev["D50_mm"][m] >= 2).astype(float)
+corr0 = np.exp(rc["const"] + rc["b_gravel"] * G6 + rc["x_log_Fr"] * np.log(Fr6) + rc["x_theta"] * th6 / 90)  # as sounded
+corr = corr0 * np.exp(rc["m_gpr"])                                                                              # maximum scour
 sand = (ev["D50_mm"][m] < 2).to_numpy()
 shap = pd.read_csv(OUT / "week5_shap_importance.csv"); gb = pd.read_csv(OUT / "week5_lab_field_by_aD.csv")
 fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.5))
 ax = axes[0]
 # colours distinct from the model colours used in panel (b) and the lab/field colours in panel (c)
-for sel, lab, col in [(sand, "median, sand", SLOTS[6]), (~sand, "median, gravel/cobble", SLOTS[3])]:
+for sel, lab, col in [(sand, "max. scour median, sand", SLOTS[6]), (~sand, "max. scour median, gravel/cobble", SLOTS[3])]:
     ax.scatter(aD[sel], corr[sel], s=2.5, lw=0, alpha=0.6, color=col, label=lab)
 ax.scatter(aD, corr * k1, s=2.5, lw=0, alpha=0.35, color=SLOTS[7], label=f"95% bound, one pier (×{k1:.1f})")
 ax.scatter(aD, corr * 2.6 * 4 ** 0.3, s=2.5, lw=0, alpha=0.35, color=MUTED, label="95% bound, four piers (×3.9)")

@@ -242,18 +242,19 @@ S7_S8 = f"""
 
 The Ngoi Thia Bridge (five spans, 176.5 m, opened in 1989) crosses a gravel‑bed mountain river in northern Vietnam on shallow foundations. During the flood of 5–11 October 2017 (modelled peak discharge 860 m³/s, water level +264.06 m), Pier T4 settled and tilted and two spans collapsed (Fig. S1). The official investigation (MOT 2017) attributed the failure to the extreme flood, to morphological change that shifted the thalweg toward Pier T4, and to a large bamboo cluster trapped against the pier. After the flood, the bed at the pier was 2.63 m below its pre‑flood level and 0.63 m below the base of the 2‑m‑deep footing.
 
-Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four piers, so the bridge‑level multiplier is 2.6 × 4^0.3 ≈ 3.95 (main text, Table 5).
+Inputs: equivalent pier width a = 1.4 m (shaft 1.3 m wide in its upper part and 1.6 m in its lower part), L = 6 m, round nose, y = 8.54 m, D50 = 17 mm. The approach velocity at the pier, 1.3 m/s, was obtained by distributing the discharge over the pre‑flood cross section (digitized from the as‑built drawing) with Manning's equation. Because deposits narrowed the section during the event, the velocity of the design flow at a similar stage (2.6 m/s) is used as an upper case. θ = 15° represents the shift of the thalweg toward the pier. The bridge has four main‑channel piers, so the bridge‑level multiplier is 2.6 × 4^0.3 ≈ 3.95 (main text, Table 3).
 
-**Table S7.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured: at least 2.63 m; footing depth 2.0 m).
+**Table S7.** Estimated scour depth (m) at Pier T4, October 2017 flood (measured after the flood: at least 2.63 m; footing depth 2.0 m), using Eq. (2) with G = 1 (gravel). The refill factor 1.61 (M = 1) is identified for sand beds only and is applied here provisionally.
 
 | Estimate | V = 1.3 m/s, θ = 0° | V = 1.3 m/s, θ = 15° | V = 2.6 m/s, θ = 0° | V = 2.6 m/s, θ = 15° |
 |---|---|---|---|---|
 | HEC‑18 | 2.51 | 4.03 | 3.36 | 5.43 |
-| Corrected median, Eq. (2) | 0.77 | 0.93 | 0.92 | 1.12 |
-| 95% bound, single pier (× 2.6) | 2.03 | 2.45 | 2.42 | 2.94 |
-| 95% bound, all four piers (× 3.95) | 3.04 | 3.67 | 3.63 | 4.42 |
+| Corrected median, scour as sounded (M = 0) | 0.67 | 0.82 | 0.78 | 0.97 |
+| Corrected median, maximum scour (M = 1) | 1.07 | 1.32 | 1.26 | 1.56 |
+| 95% bound, maximum scour, single pier (× 2.6) | 2.78 | 3.42 | 3.28 | 4.05 |
+| 95% bound, maximum scour, four piers (× 3.95) | 4.22 | 5.19 | 4.97 | 6.14 |
 
-The corrected median is smaller than the footing depth in every scenario and would have suggested a safe foundation; the measured scour, a lower bound because the hole refills after a flood, is 2.3–3.4 times the median and exceeds the single‑pier bound in three of four scenarios. The bound for all four piers is not exceeded, and HEC‑18 is exceeded only in the aligned, low‑velocity scenario. The pier was outside the scope of Eq. (2) because of the debris and the migrating thalweg.
+The corrected median for scour as sounded is well below the footing depth and the measured scour (which is itself a lower bound, because the hole refills after a flood). The single‑pier bound for maximum scour is not exceeded in any scenario, and HEC‑18 is exceeded only in the aligned, low‑velocity scenario. The pier was outside the scope of Eq. (2) because of the debris and the migrating thalweg.
 
 ![Fig. S1](figures_en/Fig7_ngoithia_case.png)
 
@@ -298,6 +299,42 @@ Under the single‑pier bound of Eq. (2), the proportion of records above the bo
 MOT (Ministry of Transport of Vietnam). 2017. *Report on the cause of the Ngoi Thia Bridge collapse.* Hanoi, Vietnam: MOT. [In Vietnamese.]
 """
 text += S7_S8
+
+r2v = pd.read_csv(OUT / "rev2_variants.csv").set_index("variant").T
+r2c = pd.read_csv(OUT / "rev2_coefficients.csv")
+r2c = r2c.assign(CI=lambda x: x.apply(lambda r: f"{r.coef:.3f} [{r.lo95:.3f}, {r.hi95:.3f}]", axis=1)).pivot(index="term", columns="variant", values="CI").fillna("")
+S8B = f"""
+### S8, second revision: measurement level, bed‑class form and k multipliers
+
+Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr); E2m = E2 + indicators for GPR, survey, scour rod and unreported method (reference: soundings, fathometer, ADCP); E3 = bed‑class form (G, θ, ln Fr); E3m = E3 + all method indicators; E3c = three bed classes + method indicators; E3g = E3 + GPR indicator only (Eq. 2 of the main text).
+
+**Table S8h.** Variants on the 1,175 cohesionless and unreported‑bed records: bridge‑ and source‑grouped CV, correlation of residual with Fr, and extrapolation (ext = MAE ratio to the same rows under bridge CV; extMAE in m; NaN where a bed‑class factor cannot be estimated).
+
+{md(r2v.round(3))}
+
+**Table S8i.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
+
+{r2c.to_markdown()}
+
+**Table S8j.** GPR against soundings within the same bed class (ratio = measured/HEC‑18; meas/E2 = measured/out‑of‑fold continuous form). A fit to sand records only gives a GPR coefficient of 0.493 (factor 1.64).
+
+{md(pd.read_csv(OUT / "rev2_gpr_vs_soundings.csv").round(3))}
+
+**Table S8k.** Multipliers for k piers from out‑of‑fold residuals of Eq. 2 (empirical, Gaussian random‑effects, semi‑parametric, and 2.6·k^0.3 fit at the single‑pier value).
+
+{md(pd.read_csv(OUT / "rev2_k_multipliers.csv").round(3))}
+
+**Table S8l.** Bridges by number of measured piers (medians): bridges with several measured piers have finer beds and deeper flows.
+
+{pd.read_csv(OUT / "rev2_bridges_by_npier.csv").round(2).to_markdown(index=False)}
+
+**Table S8m.** 95% bound of Eq. 2 relative to HEC‑18, for scour as sounded (M = 0) and maximum scour (M = 1), by bed class and number of piers (empirical multipliers).
+
+{md(pd.read_csv(OUT / "rev2_bound_vs_hec.csv").round(2))}
+
+Direct check on the measurements: the 95th percentile of measured/HEC‑18 is 1.42 for GPR records in sand (12.4% above HEC‑18), 1.03 for soundings in sand (6.2%) and 0.54 for soundings in gravel and cobble (0.4%).
+"""
+text += S8B
 
 (HERE / "Supplement_BaiA.md").write_text(text, encoding="utf-8")
 print("Đã ghi", HERE / "Supplement_BaiA.md")
