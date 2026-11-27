@@ -1,0 +1,17 @@
+{
+  "title": "Code, data and supplemental materials for: Correcting HEC-18 Pier Scour with Field Data: Bridge-Level Validation and Conformal Bounds",
+  "upload_type": "software",
+  "description": "Reproducible code, the flagged USGS Pier-Scour Database (PSDb-2014) tables, all result tables, figures and the Supplemental Materials (Supplemental_Materials.pdf: Sections S1-S8, Tables S1-S24, Fig. S1) for the manuscript submitted to the Journal of Hydraulic Engineering (ASCE). Code is released under the MIT licence; derived data under CC BY 4.0 (see LICENSE-DATA.md). The original PSDb-2014 is a U.S. Geological Survey public-domain dataset (Benedict and Caldwell 2014, Data Series 845, https://doi.org/10.3133/ds845).",
+  "creators": [
+    {"name": "Mai, Quang Huy", "affiliation": "University of Transport and Communications, Hanoi, Vietnam", "orcid": "0000-0003-1861-314X"},
+    {"name": "Nguyen, Dang Phong", "affiliation": "University of Transport and Communications, Hanoi, Vietnam"},
+    {"name": "Pham, Thi Thao", "affiliation": "University of Transport and Communications, Hanoi, Vietnam", "orcid": "0009-0009-6398-1794"},
+    {"name": "Ho, Lan Huong", "affiliation": "University of Transport and Communications, Hanoi, Vietnam"}
+  ],
+  "license": "MIT",
+  "keywords": ["bridge scour", "HEC-18", "pier scour", "field data", "PSDb-2014", "conformal prediction", "grouped cross-validation", "machine learning"],
+  "related_identifiers": [
+    {"identifier": "10.3133/ds845", "relation": "isDerivedFrom", "scheme": "doi"}
+  ],
+  "version": "1.0"
+}

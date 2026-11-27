@@ -1,6 +1,7 @@
 # Allow-list: ignore everything, then re-include only what is published.
 /*
 !/.gitignore
+!/.zenodo.json
 !/README.md
 !/LICENSE
 !/LICENSE-DATA.md
