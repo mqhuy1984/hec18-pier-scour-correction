@@ -225,16 +225,16 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 
 **Table S12.** MAE (m) of the variants under bridge‑ and source‑grouped CV and in the six extrapolation experiments. E1 and E2 exclude the 78 cohesive‑bed records, so their test sets differ slightly from those of E0 (notably gravel → sand).
 
-| E0: 4 terms (current: aD, θ, C, U), all beds | E1: aD, θ; cohesionless + unknown | E2: aD, θ, ln Fr; cohesionless + unknown |
-|---|---|---|
-| 0.354 | 0.368 | 0.305 |
-| 0.643 | 0.604 | 0.591 |
-| 0.969 | 0.911 | 0.921 |
-| 1.268 | 1.281 | 1.248 |
-| 0.472 | 0.495 | 0.494 |
-| 0.585 | 0.633 | 0.682 |
-| 0.569 | 0.541 | 0.499 |
-| 0.505 | 0.510 | 0.511 |
+| split | E0: 4 terms (current: aD, θ, C, U), all beds | E1: aD, θ; cohesionless + unknown | E2: aD, θ, ln Fr; cohesionless + unknown |
+|---|---|---|---|
+| Fr ≤ 0.3 → > 0.5 | 0.354 | 0.368 | 0.305 |
+| USA → other | 0.643 | 0.604 | 0.591 |
+| bn ≤ 3 → 3–5 m | 0.969 | 0.911 | 0.921 |
+| bn ≤ 3 → > 5 m | 1.268 | 1.281 | 1.248 |
+| bridge CV 5×10 | 0.472 | 0.495 | 0.494 |
+| gravel → sand | 0.585 | 0.633 | 0.682 |
+| sand → gravel | 0.569 | 0.541 | 0.499 |
+| source CV 5×10 | 0.505 | 0.510 | 0.511 |
 
 **Table S13.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 
@@ -344,31 +344,31 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 
 **Table S19.** Variants on the 1,175 cohesionless and unreported‑bed records: bridge‑ and source‑grouped CV, correlation of residual with Fr, and extrapolation (ext = MAE ratio to the same rows under bridge CV; extMAE in m; NaN where a bed‑class factor cannot be estimated).
 
-| E2: ln(a/D50), θ, ln Fr | E2m: E2 + method | E3: bed class (sand/gravel), θ, ln Fr | E3m: E3 + method | E3c: 3 bed classes, θ, ln Fr, method | E3g: E3 + GPR indicator only |
-|---|---|---|---|---|---|
-| 0.494 | 0.482 | 0.506 | 0.496 | 0.492 | 0.505 |
-| 0.488 | 0.543 | 0.502 | 0.543 | 0.548 | 0.527 |
-| 2.625 | 2.619 | 2.667 | 2.718 | 2.692 | 2.621 |
-| 4.383 | 3.498 | 3.957 | 3.362 | 3.430 | 4.034 |
-| 0.511 | 0.537 | 0.525 | 0.555 | 0.550 | 0.548 |
-| 0.440 | 0.354 | 0.452 | 0.371 | 0.374 | 0.408 |
-| 0.894 | 0.858 | 0.893 | 0.867 | 0.869 | 0.871 |
-| 4.843 | 7.209 | 4.323 | 5.677 | 5.609 | 7.277 |
-| 11.037 | 13.746 | 10.519 | 11.873 | 12.305 | 14.467 |
-| 0.006 | 0.011 | 0.011 | 0.015 | 0.020 | 0.021 |
-| 0.832 | 0.696 | 0.710 | 0.615 | 0.502 | 0.467 |
-| 1.011 | 1.424 | 1.025 | 1.421 | 1.408 | 1.037 |
-| 0.591 | 0.920 | 0.643 | 0.922 | 0.896 | 0.687 |
-| 1.022 | 1.007 | 0.990 | 1.009 | 1.014 | 1.025 |
-| 0.921 | 0.934 | 0.947 | 0.987 | 0.971 | 1.026 |
-| 0.996 | 0.995 | 0.996 | 1.060 | 1.069 | 1.020 |
-| 1.248 | 1.282 | 1.367 | 1.466 | 1.445 | 1.428 |
-| 1.475 | 2.118 | — | — | — | — |
-| 0.499 | 0.722 | — | — | — | — |
-| 1.192 | 1.251 | — | — | 1.148 | — |
-| 0.682 | 0.686 | — | — | 0.649 | — |
-| 1.220 | 1.462 | 1.165 | 1.492 | 1.471 | 1.090 |
-| 0.305 | 0.346 | 0.274 | 0.342 | 0.338 | 0.251 |
+| metric | E2: ln(a/D50), θ, ln Fr | E2m: E2 + method | E3: bed class (sand/gravel), θ, ln Fr | E3m: E3 + method | E3c: 3 bed classes, θ, ln Fr, method | E3g: E3 + GPR indicator only |
+|---|---|---|---|---|---|---|
+| bridge_MAE | 0.494 | 0.482 | 0.506 | 0.496 | 0.492 | 0.505 |
+| bridge_R2 | 0.488 | 0.543 | 0.502 | 0.543 | 0.548 | 0.527 |
+| k95_single_pier | 2.625 | 2.619 | 2.667 | 2.718 | 2.692 | 2.621 |
+| bridge_exceed_row_% | 4.383 | 3.498 | 3.957 | 3.362 | 3.430 | 4.034 |
+| source_MAE | 0.511 | 0.537 | 0.525 | 0.555 | 0.550 | 0.548 |
+| source_R2 | 0.440 | 0.354 | 0.452 | 0.371 | 0.374 | 0.408 |
+| source_cov90 | 0.894 | 0.858 | 0.893 | 0.867 | 0.869 | 0.871 |
+| source_exceed_row_% | 4.843 | 7.209 | 4.323 | 5.677 | 5.609 | 7.277 |
+| source_exceed_bridge_% | 11.037 | 13.746 | 10.519 | 11.873 | 12.305 | 14.467 |
+| rho_resid_Fr | 0.006 | 0.011 | 0.011 | 0.015 | 0.020 | 0.021 |
+| p_resid_Fr | 0.832 | 0.696 | 0.710 | 0.615 | 0.502 | 0.467 |
+| ext_USA → other | 1.011 | 1.424 | 1.025 | 1.421 | 1.408 | 1.037 |
+| extMAE_USA → other | 0.591 | 0.920 | 0.643 | 0.922 | 0.896 | 0.687 |
+| ext_bn ≤ 3 → 3–5 m | 1.022 | 1.007 | 0.990 | 1.009 | 1.014 | 1.025 |
+| extMAE_bn ≤ 3 → 3–5 m | 0.921 | 0.934 | 0.947 | 0.987 | 0.971 | 1.026 |
+| ext_bn ≤ 3 → > 5 m | 0.996 | 0.995 | 0.996 | 1.060 | 1.069 | 1.020 |
+| extMAE_bn ≤ 3 → > 5 m | 1.248 | 1.282 | 1.367 | 1.466 | 1.445 | 1.428 |
+| ext_sand → gravel/cobble | 1.475 | 2.118 | — | — | — | — |
+| extMAE_sand → gravel/cobble | 0.499 | 0.722 | — | — | — | — |
+| ext_gravel → sand | 1.192 | 1.251 | — | — | 1.148 | — |
+| extMAE_gravel → sand | 0.682 | 0.686 | — | — | 0.649 | — |
+| ext_Fr ≤ 0.3 → > 0.5 | 1.220 | 1.462 | 1.165 | 1.492 | 1.471 | 1.090 |
+| extMAE_Fr ≤ 0.3 → > 0.5 | 0.305 | 0.346 | 0.274 | 0.342 | 0.338 | 0.251 |
 
 **Table S20.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 

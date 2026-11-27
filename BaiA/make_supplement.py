@@ -268,7 +268,7 @@ Script: `BaiA/revision_analyses.py`. E0 = M3‑S6 (four terms, all beds); E1 = l
 
 **Table S8a.** MAE (m) of the variants under bridge‑ and source‑grouped CV and in the six extrapolation experiments. E1 and E2 exclude the 78 cohesive‑bed records, so their test sets differ slightly from those of E0 (notably gravel → sand).
 
-{md(s8a)}
+{md(s8a.reset_index())}
 
 **Table S8b.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 
@@ -312,7 +312,7 @@ Script: `BaiA/revision2_analyses.py`. E2 = continuous form (ln a/D50, θ, ln Fr)
 
 **Table S8h.** Variants on the 1,175 cohesionless and unreported‑bed records: bridge‑ and source‑grouped CV, correlation of residual with Fr, and extrapolation (ext = MAE ratio to the same rows under bridge CV; extMAE in m; NaN where a bed‑class factor cannot be estimated).
 
-{md(r2v.round(3))}
+{md(r2v.round(3).rename_axis("metric").reset_index())}
 
 **Table S8i.** Coefficients on the log scale with bridge‑bootstrap 95% intervals.
 
