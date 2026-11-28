@@ -11,7 +11,7 @@ The derived data are:
 
 You may share and adapt them for any purpose, including commercial use, provided you give appropriate credit. To give credit, cite the article and the repository DOI:
 
-> Mai, Q. H., Nguyen, D. P., Pham, T. T., and Ho, T. L. H. (2026). HEC-18 pier scour against field data: Measured versus maximum scour and bridge-level bounds. Journal of Hydraulic Engineering (submitted). Data and code: https://doi.org/10.5281/zenodo.24601656.
+> Mai, Q. H., Nguyen, D. P., and Pham, T. T. (2026). HEC-18 pier scour against field data: Measured versus maximum scour and bridge-level bounds. Journal of Hydraulic Engineering (submitted). Data and code: https://doi.org/10.5281/zenodo.24601656.
 
 ## Source data: public domain
 

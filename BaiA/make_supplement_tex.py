@@ -102,7 +102,7 @@ doc = r"""\documentclass[12pt,letterpaper]{article}
 \begin{center}
 {\Large\bfseries Supplemental Materials}\\[6pt]
 {\large """ + title + r"""}\\[10pt]
-Quang Huy Mai, Dang Phong Nguyen, Thi Thao Pham, and Thi Lan Huong Ho\\
+Quang Huy Mai, Dang Phong Nguyen, and Thi Thao Pham\\
 Faculty of Civil and Environmental Engineering, University of Transport and Communications, Hanoi, Vietnam\\[4pt]
 Corresponding author: Quang Huy Mai (\url{mqhuy@utc.edu.vn})
 \end{center}
